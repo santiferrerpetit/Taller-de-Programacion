@@ -1,0 +1,38 @@
+En simulador.c, en la linea 63, esta la condicion de ganar o perder.
+Para el backtracking, nesecitamos saber cuanto progreso hicimos por intento.
+//Por lo tanto habrìa que guardar la suma de con cuanta vida llegan las tropas a la meta.
+//Tambien, podriamos probar un lugar, y los dos de al lado, para saber cual es mas eficiente.
+//Para eso, directamente contamos la vida de los activos en la ulitma pantalla antes de perder.
+//Tambien tendriamos que guardar las posiciones mas efectivas y las que ya probamos y no f
+
+
+SIEMPRE ARRANCAMOS DEL MAXIMO DE TORRES.
+Para la profe, nosotros solo nesecitamos ganar, con que nuestra disposicion gane es suficiente.
+Para esto, arrancamos de 3 torres arbitrarias o aleatorias y nos fijamos si pierde.
+Si pierde, arrepentimos la ultima torre y probamos todas sus posibilidades.
+Si esta tambien pierde, arrepentimos la penultima torre y asi sucesivamente.
+
+Pasos:
+Primero definir la pos inicial
+Dsp fijarse si esa pos gana
+Si gana en todos los niveles ya esta y si no gana arrepiento la ultima torre.
+
+
+
+*EJEMPLO*
+Tengo las sig posibilidades
+(0,0), (2,3), (6,7), (10,15)
+
+Si esto anda genial:
+(0,0) -- (2,3) -- (6,7)
+
+Si no anda nos arrepentimos del (6,7):
+(0,0) -- (2,3) -- (10,15)
+
+Si este no anda nos arrepentimos del (2,3)
+(0,0) -- (6,7) -- (2,3)
+
+Si no anda:
+(0,0) -- (6,7) -- (10,15)
+
+Y asi sucesivamente.
