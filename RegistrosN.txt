@@ -5,7 +5,7 @@ Para el backtracking, nesecitamos saber cuanto progreso hicimos por intento.
 //Para eso, directamente contamos la vida de los activos en la ulitma pantalla antes de perder.
 //Tambien tendriamos que guardar las posiciones mas efectivas y las que ya probamos y no f
 
-
+USAMOS UNA PILA PARA ALMACENAR LAS DECICIONES
 SIEMPRE ARRANCAMOS DEL MAXIMO DE TORRES.
 Para la profe, nosotros solo nesecitamos ganar, con que nuestra disposicion gane es suficiente.
 Para esto, arrancamos de 3 torres arbitrarias o aleatorias y nos fijamos si pierde.
