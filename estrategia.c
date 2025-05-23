@@ -53,6 +53,9 @@ void disponer(Nivel* nivel, Mapa* mapa) {
     }
 }
 
+
+
+
 void disponer_con_backtracking(Nivel* nivel, Mapa* mapa) {
    // int cantidad_de_casillas= mapa->alto*mapa->ancho;
     //Coordenada pos_val[cantidad_de_casillas];
