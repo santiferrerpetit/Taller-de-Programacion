@@ -54,8 +54,20 @@ void disponer(Nivel* nivel, Mapa* mapa) {
 }
 
 void disponer_con_backtracking(Nivel* nivel, Mapa* mapa) {
-    /* A cargo de la/el estudiante */
-    return;
+   // int cantidad_de_casillas= mapa->alto*mapa->ancho;
+    //Coordenada pos_val[cantidad_de_casillas];
+    //int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
+    DisposicionTorres estrategia_actual = disponer;
+    int ganar;
+    ganar = simular_nivel(nivel, mapa, estrategia_actual);
+    if(ganar==1){
+        printf("La estrategia estuvo bien");
+    }   
+    else
+        printf("La estrategia no estuvo bien");
+    
+
+     return;
 }
 
 void disponer_custom(Nivel* nivel, Mapa* mapa) {

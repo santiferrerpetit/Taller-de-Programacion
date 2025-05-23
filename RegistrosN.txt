@@ -1,6 +1,6 @@
 En simulador.c, en la linea 63, esta la condicion de ganar o perder.
 Para el backtracking, nesecitamos saber cuanto progreso hicimos por intento.
-//Por lo tanto habrìa que guardar la suma de con cuanta vida llegan las tropas a la meta.
+//Por lo tanto habria que guardar la suma de con cuanta vida llegan las tropas a la meta.
 //Tambien, podriamos probar un lugar, y los dos de al lado, para saber cual es mas eficiente.
 //Para eso, directamente contamos la vida de los activos en la ulitma pantalla antes de perder.
 //Tambien tendriamos que guardar las posiciones mas efectivas y las que ya probamos y no f
@@ -36,3 +36,6 @@ Si no anda:
 (0,0) -- (6,7) -- (10,15)
 
 Y asi sucesivamente.
+
+
+en la segunda parte del ejercicio debemos calcular donde estan las mejores posibiliades para poner torres.
