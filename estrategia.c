@@ -1,4 +1,5 @@
 #include "estrategia.h"
+#include "simulador.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -57,20 +58,33 @@ void disponer(Nivel* nivel, Mapa* mapa) {
 
 
 void disponer_con_backtracking(Nivel* nivel, Mapa* mapa) {
-   // int cantidad_de_casillas= mapa->alto*mapa->ancho;
-    //Coordenada pos_val[cantidad_de_casillas];
-    //int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
+    int cantidad_de_casillas= mapa->alto*mapa->ancho;
+    Coordenada pos_val[cantidad_de_casillas];
+    int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
     DisposicionTorres estrategia_actual = disponer;
-    int ganar;
-    ganar = simular_nivel(nivel, mapa, estrategia_actual);
-    if(ganar==1){
-        printf("La estrategia estuvo bien");
-    }   
-    else
-        printf("La estrategia no estuvo bien");
     
+    Pila *pila = pila_crear();
 
-     return;
+    for(int i = 0; i<mapa->cant_torres; i++)
+        pila_apilar(pila, pos_val[i]);
+    
+    for(int i = (mapa->cant_torres - 1); i<cant_pos_validas; i++){
+        //la condicion tiene que ser el simular_nivel
+        if(simular_nivel(nivel, mapa, )){
+            for(int j=0;j<mapa->cant_torres;j++){
+                Coordenada coord =pila_tope(pila) ;
+                int x= coord.x ;
+                int y= coord.y ;
+                colocar_torre(mapa, x, y, j);
+                pila_desapilar(pila);
+            }
+        }
+
+    }
+
+
+    }
+    return;
 }
 
 void disponer_custom(Nivel* nivel, Mapa* mapa) {

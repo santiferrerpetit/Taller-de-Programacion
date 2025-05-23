@@ -1,19 +1,25 @@
+#include "nivel.h"
 #ifndef PILA_H
 #define PILA_H
-#include "nivel.h"
-
 
 #define MAX_PILA 100
 
-typedef struct{
+typedef struct {
+    int fila;
+    int columna;
+} Coordenada;
+
+typedef struct {
     Coordenada datos[MAX_PILA];
     int ultimo;
 } Pila;
 
-// Prototipos
-void inicializar_pila(Pila* pila);
-int pila_vacia(Pila* pila);
-int apilar(Pila* pila, Coordenada coord);
-int desapilar(Pila* pila, Coordenada* coord);
+Pila* pila_crear();
+int pila_es_vacia(Pila* p);
+Coordenada pila_tope(Pila* p);
+void pila_apilar(Pila* p, Coordenada dato);
+void pila_desapilar(Pila* p);
+void pila_imprimir(Pila* p);
+void pila_destruir(Pila* p);
 
 #endif
