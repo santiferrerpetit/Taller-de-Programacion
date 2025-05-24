@@ -82,6 +82,7 @@ void backtracking(Nivel* nivel, Mapa* mapa) {
 
     return;
 }
+*/
 
 void disponer_con_backtracking(Pila* pila, Nivel* nivel, Mapa* mapa) {
     for(int j=0;j<mapa->cant_torres;j++){
@@ -92,9 +93,9 @@ void disponer_con_backtracking(Pila* pila, Nivel* nivel, Mapa* mapa) {
             pila_desapilar(pila);
     };
 }
-*/
 
-void disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa){
+
+Pila* disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa){
     int cantidad_de_casillas= mapa->alto*mapa->ancho;
     Coordenada pos_val[cantidad_de_casillas];
     int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
@@ -109,15 +110,30 @@ void disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa){
         colocar_torre(mapa, pos_x, pos_y, i);
         
     }
+    return pila;
 }
-
-void pruebas_backtracking(Nivel* nivel, Mapa* mapa, Pila* pila, int i){
+//Para llamarla, i siempre tendra que ser 0
+Pila* pruebas_backtracking(Nivel* nivel, Mapa* mapa, Pila* pila, int i){
+    int bandera = 0;
     int cantidad_de_casillas= mapa->alto*mapa->ancho;
     Coordenada pos_val[cantidad_de_casillas];
     int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
-
-    if((simular_nivel(nivel, mapa, disposicion_inicial_backtracking))){
-    }
+    //Si el i es el inicial, osea 0 arranco con la disposicion inicial.Si no voy con las pruebas recursivas.El i =-1 es la cancelacion.
+    if(i == 0 && bandera != 1)
+        if(simular_nivel(nivel, mapa, disposicion_inicial_backtracking)){
+            printf("Se encontro la disposicion correcta");
+            bandera = 1;
+            return pila;
+        }
+        else{
+            int pos_x = pos_val[i + mapa->cant_torres].x;
+            int pos_y = pos_val[i + mapa->cant_torres].y;
+            pila_desapilar(pila);
+            colocar_torre(mapa,pos_x,pos_y, i + mapa->cant_torres);
+            pila_apilar(pila, pos_val[i + mapa->cant_torres]);
+            i++;
+            pruebas_backtracking(nivel, mapa, pila, i);
+            }
     else{
         int pos_x = pos_val[i + mapa->cant_torres].x;
         int pos_y = pos_val[i + mapa->cant_torres].y;
@@ -127,6 +143,8 @@ void pruebas_backtracking(Nivel* nivel, Mapa* mapa, Pila* pila, int i){
         i++;
         pruebas_backtracking(nivel, mapa, pila, i);
         }
+        return pila;
+        //Hasta aca, la disposicion solo backtrackea una opcion
 }
 
 void disponer_custom(Nivel* nivel, Mapa* mapa) {
