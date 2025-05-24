@@ -88,7 +88,6 @@ int quedan_opciones_validas(Pila* pila, Nivel* nivel, Mapa* mapa, int i){
     int cantidad_de_casillas= mapa->alto*mapa->ancho;
     Coordenada pos_val[cantidad_de_casillas];
     int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
-
     return cant_pos_validas <= mapa->cant_torres;
 }
 
@@ -104,7 +103,7 @@ void disponer_con_backtracking(Pila* pila, Nivel* nivel, Mapa* mapa) {
 }
 
 
-Pila* disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa){
+void disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa){
     int cantidad_de_casillas= mapa->alto*mapa->ancho;
     Coordenada pos_val[cantidad_de_casillas];
     int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
@@ -119,8 +118,8 @@ Pila* disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa){
         colocar_torre(mapa, pos_x, pos_y, i);
         
     }
-    return pila;
 }
+
 //Para llamarla, i siempre tendra que ser 0
 int pruebas_backtracking(Nivel* nivel, Mapa* mapa, Pila* pila, int i){
     int bandera = 0;
@@ -167,7 +166,7 @@ int pruebas_backtracking(Nivel* nivel, Mapa* mapa, Pila* pila, int i){
 
 //Hasta ahora, pruebo una sola linea.Hay que hacer una funcion para que use la funcion de probar una sola linea usando abarcando la posibilidad de tener que desapilar una vez mas.
 //La idea de la funcion bajar_nivel es que funcione independientemente de en que nivel esta.
-
+//Bajo un nivel en la pila
 void bajar_nivel(Nivel* nivel, Mapa* mapa, Pila* pila){
     if(!pruebas_backtracking(nivel, mapa, pila, 0)){
         if(pila_es_vacia(pila)){
@@ -175,8 +174,32 @@ void bajar_nivel(Nivel* nivel, Mapa* mapa, Pila* pila){
         }
         else
             pila_desapilar(pila);
-            
     }
+}
+
+//Pruebo una opcion en la casilla de abajo
+void probar1(Nivel* nivel,Mapa* mapa,Pila* pila,int intento){
+    int cantidad_de_casillas= mapa->alto*mapa->ancho;
+    Coordenada pos_val[cantidad_de_casillas];
+    int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
+    pila_apilar(pila, pos_val[intento]);
+}
+
+//Hago un while que si no funciona la disposicion, baje un nivel, pruebe una apilacion nueva y vuelva a empezar.
+void disponer_con_backtracking_2(Nivel* nivel, Mapa* mapa, Pila* pila){
+    int cantidad_de_casillas= mapa->alto*mapa->ancho;
+    Coordenada pos_val[cantidad_de_casillas];
+    int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
+    int contador = 0;
+    int intento = 0;
+    
+    while(!pruebas_backtracking(nivel, mapa, pila, contador) && intento <= cant_pos_validas){
+        bajar_nivel(nivel,mapa,pila);
+        probar1(nivel, mapa, pila, intento);
+        intento++;
+        disponer_con_backtracking_2(nivel, mapa, pila);
+    }
+
 }
 
 
