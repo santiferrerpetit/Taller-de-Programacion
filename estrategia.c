@@ -28,6 +28,15 @@ static void colocar_torre(Mapa *mapa, int x, int y, int nro_torre) {
     mapa->casillas[x][y] = TORRE;
 }
 
+static void quitar_torre(Mapa *mapa, int x, int y, int nro_torre) {
+    // actualizar torre
+    mapa->torres[nro_torre].x = x;
+    mapa->torres[nro_torre].y = y;
+
+    // actualizar mapa
+    mapa->casillas[x][y] = VACIO;
+}
+
 static int determinar_posicion_torre(int *casilla_elegida, int cant_validas) {
     int nueva_posicion = rand() % cant_validas;
     while(casilla_elegida[nueva_posicion])
@@ -201,6 +210,81 @@ void disponer_con_backtracking_2(Nivel* nivel, Mapa* mapa, Pila* pila){
     }
 
 }
+
+
+
+
+
+//Verifica que la posicion sea valida
+int es_posicion_valida_para_torre(Mapa* mapa,int pos1,int pos2){
+    return (mapa->casillas[pos1][pos2] == VACIO);
+}
+
+// Pseudocódigo
+int encontrar_disposicion_torres(Mapa* mapa, Nivel* nivel, int indiceTorre) {
+    // Caso base: Si ya hemos intentado colocar todas las torres necesarias
+    int cantidad_de_casillas= mapa->alto*mapa->ancho;
+    Coordenada pos_val[cantidad_de_casillas];
+    int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
+
+    Pila *pila = pila_crear();
+
+    //Establezco primeras torres y las dejo en la pila
+    for(int i = 0; (i<mapa->cant_torres); i++ , indiceTorre++){
+        pila_apilar(pila, pos_val[i]);
+        int pos_x = pos_val[i].x;
+        int pos_y = pos_val[i].y;
+    }
+    //
+    if (indiceTorre == mapa->cant_torres) {
+        // Todas las torres han sido colocadas. Ahora simulamos el nivel para ver si esta disposición es ganadora.
+        return simular_nivel(nivel, mapa, disponer_con_backtracking); // Asume que simular_nivel devuelve true si se gana
+    }
+    //
+    // Iterar sobre todas las posibles posiciones para la indiceTorre
+    pruebas_backtracking(nivel, mapa, pila, 0);
+    //
+    //Hay que hacer esto
+    // (Necesitarás una forma de obtener las posiciones válidas y disponibles)
+    Coordenada pos_val_totales[cantidad_de_casillas];
+    int cant_pos_validas_totales=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho); // Asume que esto es un array de todas las posiciones válidas
+
+    for (int i = 0; i < cant_pos_validas_totales; i++) {
+        Coordenada pos_candidata = pos_val_totales[i];
+
+        // 1. Verificar si la posición candidata es válida para colocar una torre AHORA (ej. no hay camino, no hay otra torre)
+        //Hay que terminarlo pero no se si es del todo util o ya lo hace nuestra colocar torre
+        if (es_posicion_valida_para_torre(mapa, pos_candidata.x, pos_candidata.y)) {
+            // 2. Probar la decisión: Colocar la torre
+            colocar_torre(mapa, pos_candidata.x, pos_candidata.y, indiceTorre); // Asegúrate de que `colocar_torre` actualice el mapa
+
+            // 3. Llamada recursiva para la siguiente torre
+            if (encontrar_disposicion_torres(mapa, nivel, indiceTorre + 1)) {
+                return 1; // Encontramos una solución
+            }
+
+            // 4. Si la llamada recursiva no encontró una solución (o llegó a un callejón sin salida),
+            //    DESHACER la decisión: Quitar la torre que acabamos de colocar
+            //    Esto es CRUCIAL para el backtracking.
+            quitar_torre(mapa, pos_candidata.x, pos_candidata.y); // Necesitarás una función para esto
+        }
+    }
+
+    // Si hemos probado todas las posiciones para esta torre y ninguna llevó a una solución
+    return 0; // No hay solución a partir de este punto
+}
+
+// Función principal para iniciar el backtracking
+void resolver_disposicion(Nivel* nivel, Mapa* mapa) {
+    // Podrías inicializar el mapa aquí si es necesario (ej. limpiar cualquier torre existente)
+    if (encontrar_disposicion_torres(mapa, nivel, 0)) {
+        printf("¡Se encontró una disposición de torres ganadora!\n");
+        // El mapa debería contener la disposición ganadora en este punto
+    } else {
+        printf("No se encontró ninguna disposición de torres ganadora.\n");
+    }
+}
+
 
 
 
