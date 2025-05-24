@@ -39,3 +39,7 @@ Y asi sucesivamente.
 
 
 en la segunda parte del ejercicio debemos calcular donde estan las mejores posibiliades para poner torres.
+
+
+
+NO SE SI POS_VAL TIENE LAS POSICIONES VALIDAS;NO ENCUENTRO DONDE LAS DEFINE
