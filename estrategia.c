@@ -54,7 +54,7 @@ void disponer(Nivel* nivel, Mapa* mapa) {
     }
 }
 
-
+/*
 void backtracking(Nivel* nivel, Mapa* mapa) {
     int cantidad_de_casillas= mapa->alto*mapa->ancho;
     Coordenada pos_val[cantidad_de_casillas];
@@ -91,6 +91,42 @@ void disponer_con_backtracking(Pila* pila, Nivel* nivel, Mapa* mapa) {
             colocar_torre(mapa, x, y, j);
             pila_desapilar(pila);
     };
+}
+*/
+
+void disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa){
+    int cantidad_de_casillas= mapa->alto*mapa->ancho;
+    Coordenada pos_val[cantidad_de_casillas];
+    int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
+
+    Pila *pila = pila_crear();
+
+    //Establezco primeras torres y las dejo en la pila
+    for(int i = 0; (i<mapa->cant_torres); i++){
+        pila_apilar(pila, pos_val[i]);
+        int pos_x = pos_val[i].x;
+        int pos_y = pos_val[i].y;
+        colocar_torre(mapa, pos_x, pos_y, i);
+        
+    }
+}
+
+void pruebas_backtracking(Nivel* nivel, Mapa* mapa, Pila* pila, int i){
+    int cantidad_de_casillas= mapa->alto*mapa->ancho;
+    Coordenada pos_val[cantidad_de_casillas];
+    int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
+
+    if((simular_nivel(nivel, mapa, disposicion_inicial_backtracking))){
+    }
+    else{
+        int pos_x = pos_val[i + mapa->cant_torres].x;
+        int pos_y = pos_val[i + mapa->cant_torres].y;
+        pila_desapilar(pila);
+        colocar_torre(mapa,pos_x,pos_y, i + mapa->cant_torres);
+        pila_apilar(pila, pos_val[i + mapa->cant_torres]);
+        i++;
+        pruebas_backtracking(nivel, mapa, pila, i);
+        }
 }
 
 void disponer_custom(Nivel* nivel, Mapa* mapa) {

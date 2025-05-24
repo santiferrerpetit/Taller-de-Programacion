@@ -112,7 +112,7 @@ static DisposicionTorres determinar_estrategia() {
 
     switch(opcion) {
         case 1:
-            return disponer_con_backtracking;
+            return pruebas_backtracking;
         case 2:
             return disponer_custom;
         case 0:
