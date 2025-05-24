@@ -5,11 +5,6 @@
 #define MAX_PILA 100
 
 typedef struct {
-    int fila;
-    int columna;
-} Coordenada;
-
-typedef struct {
     Coordenada datos[MAX_PILA];
     int ultimo;
 } Pila;

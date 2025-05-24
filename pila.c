@@ -29,11 +29,6 @@ void pila_desapilar(Pila* p) {
     }
 }
 
-void pila_imprimir(Pila* p) {
-    for (int i = p->ultimo - 1; i >= 0; i--) {
-        printf("(%d, %d)\n", p->datos[i].fila, p->datos[i].columna);
-    }
-}
 
 void pila_destruir(Pila* p) {
     free(p);

@@ -55,9 +55,7 @@ void disponer(Nivel* nivel, Mapa* mapa) {
 }
 
 
-
-
-void disponer_con_backtracking(Nivel* nivel, Mapa* mapa) {
+void backtracking(Nivel* nivel, Mapa* mapa) {
     int cantidad_de_casillas= mapa->alto*mapa->ancho;
     Coordenada pos_val[cantidad_de_casillas];
     int cant_pos_validas=posiciones_validas(pos_val, mapa->casillas, mapa->alto, mapa->ancho);
@@ -70,7 +68,7 @@ void disponer_con_backtracking(Nivel* nivel, Mapa* mapa) {
     
     for(int i = (mapa->cant_torres - 1); i<cant_pos_validas; i++){
         //la condicion tiene que ser el simular_nivel
-        if(simular_nivel(nivel, mapa, )){
+        if(simular_nivel(nivel, mapa, disponer_con_backtracking )){
             for(int j=0;j<mapa->cant_torres;j++){
                 Coordenada coord =pila_tope(pila) ;
                 int x= coord.x ;
@@ -82,9 +80,17 @@ void disponer_con_backtracking(Nivel* nivel, Mapa* mapa) {
 
     }
 
-
-    }
     return;
+}
+
+void disponer_con_backtracking(Pila* pila, Nivel* nivel, Mapa* mapa) {
+    for(int j=0;j<mapa->cant_torres;j++){
+        Coordenada coord =pila_tope(pila) ;
+            int x= coord.x ;
+            int y= coord.y ;
+            colocar_torre(mapa, x, y, j);
+            pila_desapilar(pila);
+    };
 }
 
 void disponer_custom(Nivel* nivel, Mapa* mapa) {
