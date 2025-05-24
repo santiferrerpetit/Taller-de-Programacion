@@ -28,7 +28,7 @@ void liberar_mapa(Mapa *mapa) {
     free(mapa->torres);
     free(mapa);
 }
-
+/*
 static void hsv_to_rgb_ansi(float h, int *r, int *g, int *b) {
     float c = 1.0;
     float x = (1 - fabs(fmodf(h / 60.0, 2) - 1)) * c;
@@ -58,6 +58,7 @@ static int color_de_vida(int vida, int vida_max) {
     hsv_to_rgb_ansi(hue, &r, &g, &b);
     return ANSI_COLOR_INDEX(r, g, b);
 }
+*/
 
 void imprimir_casilla(TipoCasilla tipo, int vida, int vida_max) {
     switch(tipo) {

@@ -9,8 +9,9 @@
 typedef void (*DisposicionTorres)(Nivel*, Mapa*);
 
 void disponer(Nivel* nivel, Mapa* mapa);
-void pruebas_backtracking(Nivel* nivel, Mapa* mapa, Pila* pila, int i);
-void disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa);
+//void pruebas_backtracking(Nivel* nivel, Mapa* mapa, Pila* pila, int i);
+//void disposicion_inicial_backtracking(Nivel* nivel, Mapa* mapa);
+int daño_potencial(Mapa *mapa, int x, int y);
 void disponer_custom(Nivel* nivel, Mapa* mapa);
 
 
